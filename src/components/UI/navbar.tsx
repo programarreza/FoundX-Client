@@ -12,7 +12,7 @@ import { link as linkStyles } from "@nextui-org/theme";
 import clsx from "clsx";
 import NextLink from "next/link";
 import { Logo } from "@/src/components/icons";
-import { ThemeSwitch } from "@/src/components/theme-switch";
+import { ThemeSwitch } from "@/src/components/UI/theme-switch";
 import { siteConfig } from "@/src/config/site";
 
 export const Navbar = () => {
