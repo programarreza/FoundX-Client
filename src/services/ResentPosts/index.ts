@@ -6,7 +6,7 @@ export const getResentPosts = async () => {
     `${envConfig.baseApi}/items?sortBy=-createdAt&limit=9`,
   );
 
-  await delay(5000);
+  await delay(2000);
 
   return res.json();
 };
