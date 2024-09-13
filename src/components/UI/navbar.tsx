@@ -1,3 +1,6 @@
+import { Logo } from "@/src/components/icons";
+import { ThemeSwitch } from "@/src/components/UI/theme-switch";
+import { siteConfig } from "@/src/config/site";
 import { Link } from "@nextui-org/link";
 import {
   NavbarBrand,
@@ -11,9 +14,7 @@ import {
 import { link as linkStyles } from "@nextui-org/theme";
 import clsx from "clsx";
 import NextLink from "next/link";
-import { Logo } from "@/src/components/icons";
-import { ThemeSwitch } from "@/src/components/UI/theme-switch";
-import { siteConfig } from "@/src/config/site";
+import NavbarDropdown from "./NavbarDropdown";
 
 export const Navbar = () => {
   return (
@@ -31,7 +32,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
                 )}
                 color="foreground"
                 href={item.href}
@@ -50,6 +51,10 @@ export const Navbar = () => {
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
+
+        <NavbarItem className="hidden sm:flex gap-2">
+          <NavbarDropdown />
+        </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
@@ -66,8 +71,8 @@ export const Navbar = () => {
                   index === 2
                     ? "primary"
                     : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
+                    ? "danger"
+                    : "foreground"
                 }
                 href="#"
                 size="lg"
