@@ -28,8 +28,6 @@ const FXInput = ({
     formState: { errors },
   } = useFormContext();
 
-  console.log(errors);
-
   return (
     <Input
       {...register(name)}

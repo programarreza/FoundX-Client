@@ -2,16 +2,41 @@
 
 import FXForm from "@/src/components/form/FXForm";
 import FXInput from "@/src/components/form/FXInput";
-import loginValidationSchema from "@/src/schemas/login.schema";
 import registerValidationSchema from "@/src/schemas/register.schema";
+import { registerUser } from "@/src/services/AuthService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const RegisterPage = () => {
+  const {
+    mutate: handleUserRegistration,
+    isPending,
+    data,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationKey: ["USER_REGISTRATION"],
+    mutationFn: async (userData) => registerUser(userData),
+    onSuccess: () => {
+      console.log("User creation successfully ");
+    },
+  });
+
+  console.log({ isPending, isSuccess, data });
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    const userData = {
+      ...data,
+      profilePhoto:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    };
+
+    console.log("Inside from user data:", userData);
+
+    handleUserRegistration(userData);
   };
 
   return (
