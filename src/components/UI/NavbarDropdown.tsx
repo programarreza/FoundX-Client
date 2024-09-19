@@ -1,5 +1,6 @@
 "use client";
 
+import { useUser } from "@/src/context/user.provider";
 import { logout } from "@/src/services/AuthService";
 import { Avatar } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
@@ -13,6 +14,12 @@ import { useRouter } from "next/navigation";
 
 const NavbarDropdown = () => {
   const router = useRouter();
+  const { user, setIsLoading: userLoading } = useUser();
+
+  const handleLogout = () => {
+    logout();
+    userLoading(true);
+  };
 
   const handleNavigation = (pathname: string) => {
     router.push(pathname);
@@ -22,10 +29,7 @@ const NavbarDropdown = () => {
     <div>
       <Dropdown>
         <DropdownTrigger>
-          <Avatar
-            className="cursor-pointer"
-            src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
-          />
+          <Avatar className="cursor-pointer" src={user?.profilePhoto} />
         </DropdownTrigger>
         <DropdownMenu aria-label="Static Actions">
           <DropdownItem onClick={() => handleNavigation("/profile")}>
@@ -43,7 +47,7 @@ const NavbarDropdown = () => {
           </DropdownItem>
 
           <DropdownItem
-            onClick={() => logout()}
+            onClick={() => handleLogout()}
             className="text-danger"
             color="danger"
           >

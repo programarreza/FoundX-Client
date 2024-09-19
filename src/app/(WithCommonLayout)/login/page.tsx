@@ -2,6 +2,7 @@
 import FXForm from "@/src/components/form/FXForm";
 import FXInput from "@/src/components/form/FXInput";
 import Loading from "@/src/components/UI/Loading";
+import { useUser } from "@/src/context/user.provider";
 import { useUserLogin } from "@/src/hooks/auth.hook";
 import loginValidationSchema from "@/src/schemas/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,13 +14,13 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 const Login = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-
+  const { setIsLoading: userLogin } = useUser();
   const redirect = searchParams.get("redirect");
-
   const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     handleUserLogin(data);
+    userLogin(true);
   };
 
   if (!isPending && isSuccess) {
