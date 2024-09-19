@@ -1,5 +1,6 @@
 "use client";
 
+import { logout } from "@/src/services/AuthService";
 import { Avatar } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
 import {
@@ -41,7 +42,11 @@ const NavbarDropdown = () => {
             Settings
           </DropdownItem>
 
-          <DropdownItem className="text-danger" color="danger">
+          <DropdownItem
+            onClick={() => logout()}
+            className="text-danger"
+            color="danger"
+          >
             Log out
           </DropdownItem>
         </DropdownMenu>
