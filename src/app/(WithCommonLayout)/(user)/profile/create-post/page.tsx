@@ -15,6 +15,7 @@ import {
 } from "react-hook-form";
 import { allDistict } from "@bangladeshi/bangladesh-address";
 import { useGetCategories } from "@/src/hooks/categories.hook";
+import { ChangeEvent, useState } from "react";
 
 const cityOptions = allDistict()
   .sort()
@@ -24,6 +25,11 @@ const cityOptions = allDistict()
   }));
 
 const CreatePost = () => {
+  const [imageFiles, setImageFiles] = useState<File[] | []>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
+
+  console.log(imagePreviews);
+
   const {
     data: categoriesData,
     isLoading: categoryLoading,
@@ -64,6 +70,21 @@ const CreatePost = () => {
     append({ name: "questions" });
   };
 
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files![0];
+    setImageFiles((prev) => [...prev, file]);
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setImagePreviews((prev) => [...prev, reader.result as string]);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="h-full rounded-xl bg-gradient-to-b from-default-100 px-[73px] py-12">
       <h1 className="text-2xl font-semibold">Post a found item</h1>
@@ -99,8 +120,36 @@ const CreatePost = () => {
               />
             </div>
             <div className="min-w-fit flex-1">
-              <FXInput name="description" label="Description" />
+              <label
+                className="bg-gray-500 block w-full h-full rounded-md cursor-pointer"
+                htmlFor="image"
+              >
+                Upload Image
+              </label>
+              <input
+                className="hidden"
+                type="file"
+                multiple
+                id="image"
+                onChange={(e) => handleImageChange(e)}
+              />
             </div>
+          </div>
+
+          <div className="flex gap-4 my-5 flex-wrap">
+            {imagePreviews.length > 0 &&
+              imagePreviews.map((imageDataUrl) => (
+                <div
+                  key={imageDataUrl}
+                  className="relative size-48  rounded-xl border-2 border-dashed border-default-300 p-2"
+                >
+                  <img
+                    className="h-full w-full object-cover object-center rounded-md"
+                    src={imageDataUrl}
+                    alt="item"
+                  />
+                </div>
+              ))}
           </div>
 
           <Divider className="my-4" />
