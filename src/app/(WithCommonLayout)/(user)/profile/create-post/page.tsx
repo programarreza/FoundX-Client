@@ -2,6 +2,7 @@
 
 import FXDatePicker from "@/src/components/form/FXDatePicker";
 import FXInput from "@/src/components/form/FXInput";
+import FXSelect from "@/src/components/form/FXSelect";
 import dateToISO from "@/src/utils/dateToISO";
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
@@ -12,6 +13,14 @@ import {
   useFieldArray,
   useForm,
 } from "react-hook-form";
+import { allDistict } from "@bangladeshi/bangladesh-address";
+
+const cityOptions = allDistict()
+  .sort()
+  .map((city: string) => ({
+    key: city,
+    label: city,
+  }));
 
 const CreatePost = () => {
   const methods = useForm();
@@ -50,6 +59,15 @@ const CreatePost = () => {
             </div>
             <div className="min-w-fit flex-1">
               <FXDatePicker name="dateFound" label="Found Date" />
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-2 py-2">
+            <div className="min-w-fit flex-1">
+              <FXInput name="location" label="Location" />
+            </div>
+            <div className="min-w-fit flex-1">
+              <FXSelect name="city" label="City" options={cityOptions} />
             </div>
           </div>
 
