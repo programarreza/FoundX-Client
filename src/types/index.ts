@@ -54,4 +54,5 @@ export interface IInput {
   label?: ReactNode;
   name: string;
   placeholder?: string;
+  disabled?: boolean;
 }
