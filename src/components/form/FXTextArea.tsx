@@ -2,7 +2,7 @@
 
 import { IInput } from "@/src/types";
 import { Textarea } from "@nextui-org/input";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 interface IProps extends IInput {}
 
@@ -12,8 +12,16 @@ const FXTextArea = ({ name, label, variant = "bordered" }: IProps) => {
     formState: { errors },
   } = useFormContext();
 
+  const currentValue = useWatch({ name });
+
   return (
-    <Textarea {...register(name)} label={label} minRows={6} variant={variant} />
+    <Textarea
+      {...register(name)}
+      label={label}
+      minRows={6}
+      variant={variant}
+      value={currentValue || ""}
+    />
   );
 };
 
