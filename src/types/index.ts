@@ -93,3 +93,10 @@ export type TClaimRequest = {
 export interface IReceivedClaimRequest extends IPost {
   claimRequests: TClaimRequest[];
 }
+
+export interface ISearchResult {
+  title: string;
+  description: string;
+  thumbnail: string;
+  id: string;
+}
